@@ -1,0 +1,202 @@
+<svg viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Styles -->
+  <defs>
+    <style>
+      .node rect { 
+        fill: #f0f8ff; 
+        stroke: #2980b9; 
+        stroke-width: 2px; 
+      }
+      .subgraph rect { 
+        fill: #e8f4f8; 
+        stroke: #3498db; 
+        stroke-width: 1px; 
+        rx: 5px;
+        ry: 5px;
+      }
+      .subgraph-title { 
+        fill: #2c3e50; 
+        font-weight: bold; 
+        font-size: 16px;
+      }
+      .node-text {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        fill: #34495e;
+      }
+      .edge {
+        stroke: #7f8c8d;
+        stroke-width: 2px;
+        fill: none;
+        marker-end: url(#arrowhead);
+      }
+      .gemma-group rect {
+        fill: #e8f8f0;
+        stroke: #27ae60;
+      }
+      .llama-group rect {
+        fill: #f0e8f8;
+        stroke: #8e44ad;
+      }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7f8c8d" />
+    </marker>
+  </defs>
+
+  <!-- Data Preparation Subgraph -->
+  <g class="subgraph">
+    <rect x="50" y="50" width="400" height="200" />
+    <text x="230" y="80" text-anchor="middle" class="subgraph-title">Data Preparation</text>
+    
+    <!-- Nodes -->
+    <g class="node">
+      <rect x="100" y="100" width="300" height="30" rx="5" ry="5" />
+      <text x="250" y="120" text-anchor="middle" class="node-text">Extract tables from PDFs using ChatGPT</text>
+    </g>
+
+    <g class="node">
+      <rect x="100" y="150" width="300" height="30" rx="5" ry="5" />
+      <text x="250" y="170" text-anchor="middle" class="node-text">Get JSON array for each PDF</text>
+    </g>
+
+    <g class="node">
+      <rect x="100" y="200" width="300" height="30" rx="5" ry="5" />
+      <text x="250" y="220" text-anchor="middle" class="node-text">Preprocess and concatenate data</text>
+    </g>
+
+    <!-- Edges -->
+    <path d="M250 130 L250 150" class="edge" />
+    <path d="M250 180 L250 200" class="edge" />
+  </g>
+
+  <!-- Create Training Dataset Node -->
+  <g class="node">
+    <rect x="100" y="280" width="300" height="30" rx="5" ry="5" />
+    <text x="250" y="300" text-anchor="middle" class="node-text">Create training dataset in JSON format</text>
+  </g>
+  <path d="M250 230 L250 280" class="edge" />
+
+  <!-- Model Fine-tuning Subgraph -->
+  <g class="subgraph">
+    <rect x="50" y="340" width="1100" height="350" />
+    <text x="600" y="370" text-anchor="middle" class="subgraph-title">Model Fine-tuning</text>
+    
+    <!-- Gemma Training Subgraph -->
+    <g class="subgraph gemma-group">
+      <rect x="100" y="390" width="450" height="280" />
+      <text x="325" y="420" text-anchor="middle" class="subgraph-title">Gemma 3 Fine-tuning</text>
+      
+      <!-- Nodes -->
+      <g class="node">
+        <rect x="125" y="440" width="400" height="30" rx="5" ry="5" />
+        <text x="325" y="460" text-anchor="middle" class="node-text">Load Gemma 3-4B model with QLoRA</text>
+      </g>
+
+      <g class="node">
+        <rect x="125" y="490" width="400" height="30" rx="5" ry="5" />
+        <text x="325" y="510" text-anchor="middle" class="node-text">Format dataset with Gemma chat template</text>
+      </g>
+
+      <g class="node">
+        <rect x="125" y="540" width="400" height="30" rx="5" ry="5" />
+        <text x="325" y="560" text-anchor="middle" class="node-text">Apply LoRA configuration to specific layers</text>
+      </g>
+
+      <g class="node">
+        <rect x="125" y="590" width="400" height="30" rx="5" ry="5" />
+        <text x="325" y="610" text-anchor="middle" class="node-text">Train using SFTTrainer</text>
+      </g>
+
+      <g class="node">
+        <rect x="125" y="640" width="400" height="30" rx="5" ry="5" />
+        <text x="325" y="660" text-anchor="middle" class="node-text">Save and merge adapters with base model</text>
+      </g>
+
+      <!-- Edges -->
+      <path d="M325 470 L325 490" class="edge" />
+      <path d="M325 520 L325 540" class="edge" />
+      <path d="M325 570 L325 590" class="edge" />
+      <path d="M325 620 L325 640" class="edge" />
+    </g>
+
+    <!-- Llama Training Subgraph -->
+    <g class="subgraph llama-group">
+      <rect x="650" y="390" width="450" height="280" />
+      <text x="875" y="420" text-anchor="middle" class="subgraph-title">Llama 3.2 Fine-tuning</text>
+      
+      <!-- Nodes -->
+      <g class="node">
+        <rect x="675" y="440" width="400" height="30" rx="5" ry="5" />
+        <text x="875" y="460" text-anchor="middle" class="node-text">Load Llama 3.2-3B model with QLoRA</text>
+      </g>
+
+      <g class="node">
+        <rect x="675" y="490" width="400" height="30" rx="5" ry="5" />
+        <text x="875" y="510" text-anchor="middle" class="node-text">Format dataset with Llama chat template</text>
+      </g>
+
+      <g class="node">
+        <rect x="675" y="540" width="400" height="30" rx="5" ry="5" />
+        <text x="875" y="560" text-anchor="middle" class="node-text">Apply LoRA configuration to specific layers</text>
+      </g>
+
+      <g class="node">
+        <rect x="675" y="590" width="400" height="30" rx="5" ry="5" />
+        <text x="875" y="610" text-anchor="middle" class="node-text">Train using SFTTrainer</text>
+      </g>
+
+      <g class="node">
+        <rect x="675" y="640" width="400" height="30" rx="5" ry="5" />
+        <text x="875" y="660" text-anchor="middle" class="node-text">Save and merge adapters with base model</text>
+      </g>
+
+      <!-- Edges -->
+      <path d="M875 470 L875 490" class="edge" />
+      <path d="M875 520 L875 540" class="edge" />
+      <path d="M875 570 L875 590" class="edge" />
+      <path d="M875 620 L875 640" class="edge" />
+    </g>
+  </g>
+
+  <!-- Connect data to model fine-tuning -->
+  <path d="M250 310 L250 340" class="edge" />
+
+  <!-- Deployment Subgraph -->
+  <g class="subgraph">
+    <rect x="150" y="720" width="900" height="160" />
+    <text x="600" y="750" text-anchor="middle" class="subgraph-title">Deployment</text>
+    
+    <!-- Model Deployment nodes -->
+    <g class="node">
+      <rect x="200" y="780" width="300" height="30" rx="5" ry="5" />
+      <text x="350" y="800" text-anchor="middle" class="node-text">Create Gradio UIs for both models</text>
+    </g>
+
+    <g class="node">
+      <rect x="200" y="830" width="300" height="30" rx="5" ry="5" />
+      <text x="350" y="850" text-anchor="middle" class="node-text">Connect to both model endpoints</text>
+    </g>
+
+    <!-- Comparison App nodes -->
+    <g class="node">
+      <rect x="700" y="780" width="300" height="30" rx="5" ry="5" />
+      <text x="850" y="800" text-anchor="middle" class="node-text">Process inputs through both models</text>
+    </g>
+
+    <g class="node">
+      <rect x="700" y="830" width="300" height="30" rx="5" ry="5" />
+      <text x="850" y="850" text-anchor="middle" class="node-text">Format with Gemini API and display results</text>
+    </g>
+
+    <!-- Edges -->
+    <path d="M350 810 L350 830" class="edge" />
+    <path d="M500 790 L700 790" class="edge" />
+    <path d="M500 840 L700 840" class="edge" />
+    <path d="M850 810 L850 830" class="edge" />
+  </g>
+
+  <!-- Connect model fine-tuning to deployment -->
+  <path d="M325 670 L325 700 L350 700 L350 780" class="edge" />
+  <path d="M875 670 L875 700 L350 700 L350 780" class="edge" />
+</svg>
